@@ -1,7 +1,5 @@
 import pandas as pd
 import numpy as np
-
-import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -47,7 +45,7 @@ class Explainer:
         print('Number of false negative: %s' % len(self.X_test.loc[self.false_negative_indices]))
         return self.X_test.loc[self.false_negative_indices]
     
-    def present_false_positive_summary(self):
+    def explain_false_positive(self, return_values=False):
         
         shap_arr = self.shap_values.values[self.false_positive_indices]
         
@@ -80,10 +78,11 @@ class Explainer:
         self.fp_mean_shap_values = mean_shap_values
         self.fp_lengths_of_errors = lengths_of_errors
         
-        return features, mean_feature_values, mean_shap_values, lengths_of_errors
+        if return_values:
+            return features, mean_feature_values, mean_shap_values, lengths_of_errors
     
 
-    def present_false_negative_summary(self):
+    def explain_false_negative(self, return_values=False):
         
         shap_arr = self.shap_values.values[self.false_negative_indices]
         
@@ -117,7 +116,8 @@ class Explainer:
         self.fn_mean_shap_values = mean_shap_values
         self.fn_lengths_of_errors = lengths_of_errors
         
-        return features, mean_feature_values, mean_shap_values, lengths_of_errors
+        if return_values:
+            return features, mean_feature_values, mean_shap_values, lengths_of_errors
     
     def plot_false_positive_summary(self, top_n=10, features=[]):
         if len(features) == 0:
